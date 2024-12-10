@@ -187,9 +187,13 @@ class AverageTest {
 ### Compile After Fixing All Errors:
 ![Screenshot (140)](https://github.com/user-attachments/assets/cd4fa0a8-eacd-4ebd-b956-ab236de305fb)
 
+---
+
 ## HW3-PartG: Code Coverage
 I have used EclEmma as a tool to measure the code coverage of the test case. All test cases have achieved 100% of branch coverage. I have attached the picture below as a proof.
 ![Screenshot 2024-12-10 115700](https://github.com/user-attachments/assets/2705faa9-1945-4e76-8745-9320915f2d0b)
+
+---
 
 ## Source Used
 https://youtu.be/hMVvqWVVFEk?si=-28BcHqiHQUkdjgf 
