@@ -1,14 +1,18 @@
 ## The "average" function
 ![Screenshot 2024-12-09 222538](https://github.com/user-attachments/assets/616d57cf-ed2b-491f-afb0-226a1aa06138)
 
+---
+
 ## HW3-PartA: Functional Description
 The average function takes an integer and an array of integers (list) as parameters. This function is used to calculate the average value of the first k elements in the array. If the value of k is valid (greater than 0) and the array has at least one element, the program will calculate return the average of the elements. In case of valid inputs: If k is less than the array size, program returns the average of the first k elements in the array; If k is greater than the array size, program returns the average of all elements in the array. Otherwise, the program returns 0 due to invalid input value(s). 
+
+---
 
 ## HW3-PartB: Functional Test Case
 #### Test Case 1: k is less than the array size (valid)
 * Input: k = 4, list = {2, 4, 3, 3, 5, 3}
 * Expected Output: The program returns 3 (The average of the first 4 elements in the array is calculated as (2+4+3+3)/4) = 3).
-
+  
 #### Test Case 2: k is greater than the array size (valid)
 * Input: k = 20, list = {2, 4, 3, 3, 5, 3}
 * Expected Output: The program return 3 (The average of integers in the array will be calculated as (2+4+3+3+5+3)/6 = 3).
@@ -29,6 +33,8 @@ The average function takes an integer and an array of integers (list) as paramet
 * Input: k = 4, list = {}
 * Expected Output: The program returns 0.
 
+---
+
 ## HW3-PartC: Partitions and Partition Test Cases 
 #### Partition by k:
 * k < 0
@@ -48,6 +54,8 @@ The average function takes an integer and an array of integers (list) as paramet
 |P5| empty array | 5 | [] | 0 |
 |P6| Non-empty array | 3 | [1,2,3,4] | 2 |
 
+---
+
 ## HW3-PartD: Boundary Value Test Cases:
 |Test Case ID| Boundary Condition | Input k | Input Array list | Expected Output |
 |-|-|-|-|-|
@@ -57,6 +65,8 @@ The average function takes an integer and an array of integers (list) as paramet
 |B4| k is over the maximum, k = list.length + 1| k = 4 | [2,4,6] | 4 |
 |B5| minimum size of array, list.length = 0 | k = 2 | [] | 0 |
 |B6| maximum valid size of array, list.length = k | k = 1 | [2] | 2 |
+
+---
 
 ## HW3-PartE: Java Implementation and JUnit Test Cases
 ### Implement Average Function
@@ -76,7 +86,105 @@ public class Average {
 } 
 ```
 ### Implement JUnit Test Cases
+``` ruby
+package com.testing.average;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class AverageTest {
+
+	// Valid Test Cases
+	@Test
+	public void kIsLessThanTheArraySize() {
+		Average avg = new Average();
+		assertEquals(3, avg.average(4, new int[] {2,4,3,3,5,3}));
+		System.out.println("TC1:");
+		System.out.println("Expected Output: 3");
+		System.out.println("Actual Output: " + avg.average(4, new int[] {2,4,3,3,5,3}));
+	}
+
+	@Test
+	public void kIsGreaterThanTheArraySize() {
+		Average avg = new Average();
+		assertEquals(3, avg.average(20, new int[] {2,4,3,3,5,3}));
+		System.out.println("TC2:");
+		System.out.println("Expected Output: 3");
+		System.out.println("Actual Output: " + avg.average(20, new int[] {2,4,3,3,5,3}));
+	}
+	
+	@Test
+	public void kEqualsToTheArraySize() {
+		Average avg = new Average();
+		assertEquals(3, avg.average(4, new int[] {2,4,3,3}));	
+		System.out.println("TC3:");
+		System.out.println("Expected Output: 3");
+		System.out.println("Actual Output: " + avg.average(4, new int[] {2,4,3,3}));
+	}
+	
+	// Invalid Test Cases
+	@Test
+	public void kIsZero() {
+		Average avg = new Average();
+		assertEquals(0, avg.average(0, new int[] {2,4,3,3,5,3}));
+		System.out.println("TC4:");
+		System.out.println("Expected Output: 0");
+		System.out.println("Actual Output: " + avg.average(0, new int[] {2,4,3,3,5,3}));
+	}
+	
+	@Test
+	public void kIsNegative() {
+		Average avg = new Average();
+		assertEquals(0, avg.average(-1, new int[] {2,4,3,3,5,3}));
+		System.out.println("TC5:");
+		System.out.println("Expected Output: 0");
+		System.out.println("Actual Output: " + avg.average(-1, new int[] {2,4,3,3,5,3}));
+	}
+	
+	@Test
+	public void ArrayIsEmpty() {
+		Average avg = new Average();
+		assertEquals(0, avg.average(4, new int[] {}));
+		System.out.println("TC6:");
+		System.out.println("Expected Output: 0");
+		System.out.println("Actual Output: " + avg.average(4, new int[] {}));
+	}
+	
+}
+
+```
 
 ## HW3-PartF: Compile and Run Test Cases
+### Compile Before Fixing:
+![Screenshot 2024-12-10 115700](https://github.com/user-attachments/assets/33e89db7-7383-41ec-9809-4070e6cfb30f)
 
-## Code Coverage
+#### Failure 1: kIsZero (TC4)
+* Input: k = 0, list = {2,4,3,3,5,3}
+* Expected Output: 0
+* Actual Output: 3
+* Cause: I used Math.max instead of Math.min. Thus, n = 6 instead of 0.
+* Fix: Change Math.max to Math.min
+#### Failure 2: kIsNegative (TC5)
+* Input: k = -1, list = {2,4,3,3,5,3}
+* Expected Output: 0
+* Actual Output: 3
+* Cause: I used Math.max instead of Math.min. Thus, n = 6 instead of -1.
+* Fix: Change Math.max to Math.min
+#### Error 1: kIsGreaterThanTheArraySize (TC2)
+* Input: k = 20, list = {2,4,3,3,5,3}
+* Expected Output: 0
+* Actual Output: Index Out Of Bound Error
+* Cause: I used Math.max instead of Math.min. Thus, n = 20 instead of 6 (list.length)
+* Fix: Change Math.max to Math.min
+#### Error 2: ArrayIsEmpty (TC6)
+* Input: k = 4, list = {}
+* Expected Output: 0
+* Actual Output: Index Out of Bound Error
+* Cause: I used Math.max instead of Math.min. Thus, n = 4 instead of 0 (list.length).
+* Fix: Change Math.max to Math.min
+  
+### Compile After Fixing All Errors:
+![Screenshot (140)](https://github.com/user-attachments/assets/cd4fa0a8-eacd-4ebd-b956-ab236de305fb)
+
+## HW3-PartG: Code Coverage
